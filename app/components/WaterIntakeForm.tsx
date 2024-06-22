@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 
 const WaterIntakeForm: React.FC = () => {
-  const [age, setAge] = useState<number | "">("");
-  const [weight, setWeight] = useState<number | "">("");
+  const [age, setAge] = useState<number | "">(22);
+  const [weight, setWeight] = useState<number | "">(130);
   const [height, setHeight] = useState<number | "">("");
   const [mealsPerDay, setMealsPerDay] = useState<number | "">("");
   const [waterIntake, setWaterIntake] = useState<number | null>(null);
@@ -50,7 +50,7 @@ const WaterIntakeForm: React.FC = () => {
             required
           />
         </div>
-        <div>
+        {/* <div>
           <label className="block text-sm font-medium text-gray-700">
             Height
           </label>
@@ -73,7 +73,7 @@ const WaterIntakeForm: React.FC = () => {
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             required
           />
-        </div>
+        </div> */}
         <button
           type="submit"
           className="w-full py-2 px-4 bg-blue-600 text-white font-bold rounded-md"
