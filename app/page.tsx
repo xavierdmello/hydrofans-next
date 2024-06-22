@@ -98,6 +98,8 @@ function App() {
   }, []);
 
   useEffect(() => {
+    console.log("Challengestatus: ", challengeStatus);
+    // call backend to check if challenge is complete
     if (challengeStatus == "verifyingFull") {
     }
   }, [challengeStatus]);
