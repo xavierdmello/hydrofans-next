@@ -4,11 +4,11 @@ import WaterTracking from './WaterTracking';
 
 const suggestedIntake = 2000; // Example suggested intake
 const currentIntake = 1500; // Example current intake
-const dailyIntake = [2000, 1500, 1800, 1900, 1600, 1700, 2000, 1500, 1800, 1900, 1600, 1700, 2000, 1500, 1800, 1900, 1600, 1700, 2000, 1500, 1800, 1900]; 
+const dailyIntake = [2000, 1500, 1800, 1900, 1600, 1700, 2300, 2000, 1500, 1800, 1900, 1600, 1700, 2000, 1500, 1800, 1900, 1600, 1700, 2000, 1500, 1800]; 
 
 const WaterIntakeForm: React.FC = () => {
-  const [age, setAge] = useState<number | ''>('');
-  const [weight, setWeight] = useState<number | ''>('');
+  const [age, setAge] = useState<number | ''>(20);
+  const [weight, setWeight] = useState<number | ''>(110);
   const [height, setHeight] = useState<number | ''>('');
   const [mealsPerDay, setMealsPerDay] = useState<number | ''>('');
   const [waterIntake, setWaterIntake] = useState<number | null>(null);
@@ -51,7 +51,7 @@ const WaterIntakeForm: React.FC = () => {
             required
           />
         </div>
-        <div>
+        {/* <div>
           <label className="block text-sm font-medium text-gray-700">Height (cm)</label>
           <input
             type="number"
@@ -70,7 +70,7 @@ const WaterIntakeForm: React.FC = () => {
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             required
           />
-        </div>
+        </div> */}
         <button
           type="submit"
           className="w-full py-2 px-4 bg-blue-600 text-white font-bold rounded-md"
@@ -80,7 +80,10 @@ const WaterIntakeForm: React.FC = () => {
       </form></div>}
       {waterIntake !== null && (
         <div>
-          <p className="text-lg font-bold">Recommended Water Intake: {waterIntake.toFixed(2)} mL or {(waterIntake/250).toFixed(2)} cups per day</p>
+          <p className="text-lg font-bold">Recommended Water Intake:</p>
+          <p className="text-lg font-bold">{waterIntake} mL ({(waterIntake/250).toFixed(2)} cups) per day</p>
+
+          <br />
           <WaterTracking currentIntake={currentIntake} suggestedIntake={waterIntake} dailyIntake={dailyIntake} />
         </div>
       )}
