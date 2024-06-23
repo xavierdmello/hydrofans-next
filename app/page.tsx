@@ -107,7 +107,7 @@ function App() {
   // Once the record button is pressed and an image has been saved, send it to the Claude API.
   useEffect(() => {
     async function callClaude() {
-      setClaudeResponse("Getting estimated water amount...")
+      setClaudeResponse("Getting estimated water amount...");
       if (challengeStatus === "verifyingFull" && initialWaterImage) {
         try {
           // Extract the base64 data from the data URL
@@ -225,35 +225,38 @@ function App() {
               className="mt-8 mb-8"
               priority
             /> */}
-            <Webcam
-              audio={false}
-              ref={webcamRef}
-              screenshotFormat="image/jpeg"
-              className="w-full rounded-lg"
-              videoConstraints={videoConstraints}
-            />
+            {true && (
+              <>
+                <Webcam
+                  audio={false}
+                  ref={webcamRef}
+                  screenshotFormat="image/jpeg"
+                  className="w-full rounded-lg"
+                  videoConstraints={videoConstraints}
+                />
 
-            <br />
+                <br />
 
-            <RecordButton
-              isRecording={isRecording}
-              onToggleRecording={() => {
-                if (isRecording) {
-                  setSteps(STEPS.DONE);
-                } else {
-                  setSteps(STEPS.RECORDING);
-                }
-                toggleRecording()
-              }
-              }
-              pending={
-                challengeStatus === "verifyingFull" ||
-                challengeStatus === "verifyingEmpty"
-              }
-            />
-            <p>isRecording: {isRecording.toString()}</p>
-            <p>steps: {steps}</p>
-            {claudeResponse && <p>Estimate Amount: {claudeResponse}</p>}
+                <RecordButton
+                  isRecording={isRecording}
+                  onToggleRecording={() => {
+                    if (isRecording) {
+                      setSteps(STEPS.DONE);
+                    } else {
+                      setSteps(STEPS.RECORDING);
+                    }
+                    toggleRecording();
+                  }}
+                  pending={
+                    challengeStatus === "verifyingFull" ||
+                    challengeStatus === "verifyingEmpty"
+                  }
+                />
+              </>
+            )}
+            <p>Is Recording: {isRecording.toString()}</p>
+            <p>Status: {steps.toString()}</p>
+            <p>Estimated Volume (mL): {claudeResponse}</p>
           </div>
         )}
         <div className="flex-grow w-full">{renderPage()}</div>

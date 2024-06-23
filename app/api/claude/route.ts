@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   });
   if (process.env.DISABLE_ANTHROPIC) {
     return NextResponse.json({
-      result: "Example response",
+      result: "500",
     });
   }
   try {
