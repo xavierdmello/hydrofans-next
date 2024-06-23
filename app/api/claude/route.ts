@@ -6,7 +6,11 @@ export async function POST(request: Request) {
   const anthropic = new Anthropic({
     apiKey: process.env.ANTHROPIC_API_KEY,
   });
-
+  if (process.env.DISABLE_ANTHROPIC) {
+    return NextResponse.json({
+      result: "Example response",
+    });
+  }
   try {
     const { image, systemPrompt, textPrompt } = await request.json();
 

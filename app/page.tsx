@@ -64,6 +64,12 @@ const longestStreakUsers = [
   },
 ];
 
+const enum STEPS {
+  NOT_STARTED,
+  RECORDING,
+  DONE,
+}
+
 function App() {
   const webcamRef = useRef<Webcam>(null);
 
@@ -83,6 +89,7 @@ function App() {
     | "failedNotFull"
     | "failedNotEmpty"
   >("notStarted");
+  const [steps, setSteps] = useState(STEPS.NOT_STARTED);
   const [claudeResponse, setClaudeResponse] = useState<string>("");
 
   useEffect(() => {
@@ -94,6 +101,7 @@ function App() {
   // Once the record button is pressed and an image has been saved, send it to the Claude API.
   useEffect(() => {
     async function callClaude() {
+      setClaudeResponse("Getting estimated water amount...")
       if (challengeStatus === "verifyingFull" && initialWaterImage) {
         try {
           // Extract the base64 data from the data URL
@@ -104,7 +112,12 @@ function App() {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ image: base64Data, systemPrompt: "Analyze the image.", textPrompt: "How many is the bottle in millimeters? Return one number."}),
+            body: JSON.stringify({
+              image: base64Data,
+              systemPrompt: "Analyze the image.",
+              textPrompt:
+                "How many is the bottle in millimeters? Return one number.",
+            }),
           });
 
           if (!response.ok) {
@@ -232,6 +245,8 @@ function App() {
                 challengeStatus === "verifyingEmpty"
               }
             />
+            <p>isRecording: {isRecording.toString()}</p>
+            <p>steps: {steps}</p>
             {claudeResponse && <p>{claudeResponse}</p>}
           </div>
         )}
