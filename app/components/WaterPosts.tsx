@@ -12,28 +12,32 @@ interface Post {
 
 const posts: Post[] = [
   {
-    name: "Alice",
+    name: "Ibrakhim",
+    time: "2 hours ago",
+    amountDrank: "330ml",
+    videoUrl:
+      "https://cdn.discordapp.com/attachments/1112251049160491100/1254297479474577408/IMG_3091.mov?ex=6678fb0e&is=6677a98e&hm=18603da6080af9a40fb5413a9a00b4255f125c194e3a465e039386bffe7f932f&",
+  },
+  {
+    name: "Xavier",
+    time: "4 hours ago",
+    amountDrank: "388ml",
+    videoUrl:
+      "https://cdn.discordapp.com/attachments/1112251049160491100/1254297479034441729/IMG_3093.mov?ex=6678fb0e&is=6677a98e&hm=d62e5a7b4d946e6b7314e55b03a95a74afcd592c91be94c7ba9258fa11edd448&",
+  },
+  {
+    name: "Rian",
     time: "2 hours ago",
     amountDrank: "500ml",
-    videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
+    videoUrl:
+      "https://cdn.discordapp.com/attachments/1112251049160491100/1254297479873167400/IMG_3090.mov?ex=6678fb0e&is=6677a98e&hm=83e5af0f72a992390e788c6da5c3aabeb519aba9cc28c4ee3a6f56a93f8c040f&",
   },
   {
-    name: "Bob",
+    name: "William",
     time: "4 hours ago",
     amountDrank: "750ml",
-    videoUrl: "https://www.w3schools.com/html/movie.mp4",
-  },
-  {
-    name: "Alice",
-    time: "2 hours ago",
-    amountDrank: "500ml",
-    videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-  },
-  {
-    name: "Bob",
-    time: "4 hours ago",
-    amountDrank: "750ml",
-    videoUrl: "https://www.w3schools.com/html/movie.mp4",
+    videoUrl:
+      "https://cdn.discordapp.com/attachments/1112251049160491100/1254297480393392210/IMG_3089.mov?ex=6678fb0f&is=6677a98f&hm=a1d1999700ee38d34f48d7596018100f2805411219aab6ca4f1056b66b54a6d7&",
   },
   // Add more posts as needed
 ];
