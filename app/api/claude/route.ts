@@ -2,13 +2,13 @@ import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 
 export async function POST(request: Request) {
-  console.log("api key: ", process.env.ANTHROPIC_API_KEY);
+
   const anthropic = new Anthropic({
     apiKey: process.env.ANTHROPIC_API_KEY,
   });
-  let image;
+
   try {
-    image = await request.json();
+    const { image } = await request.json();
 
     if (!image || typeof image !== "string") {
       return NextResponse.json(
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    console.log(image);
+
     const msg = await anthropic.messages.create({
       model: "claude-3-5-sonnet-20240620",
       max_tokens: 1000,
@@ -52,7 +52,6 @@ export async function POST(request: Request) {
       result: (msg.content[0] as { text: string }).text,
     });
   } catch (error) {
-    console.log("Image: ", image);
     console.error("Error calling Claude API:", error);
     return NextResponse.json(
       { error: "Failed to process image" },
