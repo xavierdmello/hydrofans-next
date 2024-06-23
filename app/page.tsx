@@ -21,6 +21,7 @@ import WaterIntakeForm from "./components/WaterIntakeForm";
 import WaterPosts from "./components/WaterPosts";
 import Webcam from "react-webcam";
 
+const logo = "/logo.png";
 const mostWaterIntakeUsers = [
   {
     rank: 1,
@@ -200,17 +201,17 @@ function App() {
   return (
     <div className="min-h-screen bg-[#00afef] flex flex-col items-center justify-center py-4">
       <div className="md:w-4/5 w-[95%] max-w-[800px] mx-auto flex flex-col items-center bg-white rounded-2xl shadow-lg h-full min-h-[calc(100vh-2rem)]">
-        {/* <img src={logo} className="w-64 mt-8 mb-8" alt="Hydrofans" /> */}
+        <img src={logo} className="w-64 mt-8 mb-8" alt="Hydrofans" />
         {currentPage === "home" && (
           <div className="mx-5 overflow-hidden rounded-lg flex flex-col items-center md:max-w-[50%] max-w-[95%]">
-            <Image
+            {/* <Image
               src="/logo.png"
               alt="Hydrofans"
               width={256}
               height={64}
               className="mt-8 mb-8"
               priority
-            />
+            /> */}
             <Webcam
               audio={false}
               ref={webcamRef}
