@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import Modal from "./Modal";
+import { cleanString } from "../util/Utils";
 
 interface WaterTrackingProps {
   currentIntake: number;
@@ -95,12 +96,8 @@ const WaterTracking: React.FC<WaterTrackingProps> = ({
     console.log(data);
     setClaudeResponse(data.fullResponse);
 
-    const ttsText = data.fullResponse;
+    const ttsText = cleanString(data.fullResponse);
 
-    ttsText.replace(
-      /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g,
-      ""
-    );
     asking = false;
     console.log(ttsText);
     if (window["speechSynthesis"] === undefined) {
@@ -108,6 +105,7 @@ const WaterTracking: React.FC<WaterTrackingProps> = ({
     }
     let msg = new SpeechSynthesisUtterance();
     msg.text = ttsText;
+    window.speechSynthesis.cancel();
     window.speechSynthesis.speak(msg);
   }
 
