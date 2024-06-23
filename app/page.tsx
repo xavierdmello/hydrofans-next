@@ -31,11 +31,10 @@ import { useUser } from "./context/UserContext";
 function App() {
   const { user, setUser } = useUser();
   const [currentIntake, setCurrentIntake] = useState(user.currentIntake);
-  const [suggestedIntake, setSuggestedIntake] = useState(user.suggestedIntake);
 
   useEffect(() => {
-    setUser({ ...user, currentIntake, suggestedIntake });
-  }, [currentIntake, suggestedIntake]);
+    setUser({ ...user, currentIntake });
+  }, [currentIntake]);
 
   const webcamRef = useRef<Webcam>(null);
 
@@ -47,7 +46,7 @@ function App() {
   const [initialWaterImage, setInitialWaterImage] = useState<string>("");
   const [endWaterImage, setEndWaterImage] = useState<string>("");
   const [isRecording, setIsRecording] = useState<boolean>(false);
-  const [currentPage, setCurrentPage] = useState<string>("home");
+  const [currentPage, setCurrentPage] = useState<string>("waterIntake");
   const [challengeStatus, setChallengeStatus] = useState<
     | "notStarted"
     | "verifyingFull"
@@ -196,6 +195,7 @@ function App() {
               className="mt-8 mb-8"
               priority
             /> */}
+            {steps === STEPS.DONE && <div>Congrats on drinking </div>}
             {true && (
               <>
                 <Webcam
@@ -214,7 +214,9 @@ function App() {
                     if (isRecording) {
                       setSteps(STEPS.DONE);
                       if (!isNaN(parseInt(claudeResponse))) {
-                        setCurrentIntake((prev) => prev + (parseInt(claudeResponse) ?? 0));
+                        setCurrentIntake(
+                          (prev) => prev + (parseInt(claudeResponse) ?? 0)
+                        );
                       }
                     } else {
                       setSteps(STEPS.RECORDING);
@@ -230,10 +232,8 @@ function App() {
             )}
             <p>Status: {steps.toString()}</p>
             <p>Estimated Volume (mL): {claudeResponse}</p>
-            <p>
-              Today's intake: {currentIntake} Suggested Intake:{" "}
-              {suggestedIntake}
-            </p>
+            <p>Today's intake: {user.currentIntake}</p>
+            <p> Suggested Intake: {user.suggestedIntake}</p>
           </div>
         )}
         <div className="flex-grow w-full">{renderPage()}</div>

@@ -37,7 +37,7 @@ const WaterIntakeForm: React.FC = () => {
 
   return (
     <div className="max-w-md mx-auto p-4">
-      {waterIntake == 0 && <div>      
+      {suggestedIntake == 0 && <div>      
         <h1 className="text-2xl font-bold mb-4">Water Intake Calculator</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -87,13 +87,13 @@ const WaterIntakeForm: React.FC = () => {
           Calculate
         </button>
       </form></div>}
-      {waterIntake !== 0 && (
+      {suggestedIntake !== 0 && (
         <div>
           <p className="text-lg font-bold">Recommended Water Intake:</p>
-          <p className="text-lg font-bold">{waterIntake} mL ({(waterIntake/250).toFixed(2)} cups) per day</p>
+          <p className="text-lg font-bold">{waterIntake} mL ({(suggestedIntake/250).toFixed(2)} cups) per day</p>
 
           <br />
-          <WaterTracking currentIntake={currentIntake} suggestedIntake={waterIntake} dailyIntake={dailyIntake} />
+          <WaterTracking currentIntake={currentIntake} suggestedIntake={suggestedIntake} dailyIntake={dailyIntake} />
         </div>
       )}
     </div>
