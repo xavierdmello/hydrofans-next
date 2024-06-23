@@ -3,40 +3,30 @@ export const logo = "/logo.png";
 export const mostWaterIntakeUsers = [
   {
     rank: 1,
-    name: "Alice",
-    metric: "2900 mL",
+    name: "William",
+    waterIntake: 2900,
+    metric: 30,
     profilePic: "https://via.placeholder.com/32",
   },
   {
     rank: 2,
-    name: "Bob",
-    metric: "2600 mL",
+    name: "Rian",
+    waterIntake: 2600,
+    metric: 25,
     profilePic: "https://via.placeholder.com/32",
   },
   {
     rank: 3,
-    name: "Charlie",
-    metric: "1800 mL",
-    profilePic: "https://via.placeholder.com/32",
-  },
-];
-export const longestStreakUsers = [
-  {
-    rank: 1,
-    name: "Dave",
-    metric: "30 days",
+    name: "Ibrakhim",
+    waterIntake: 2400,
+    metric: 24,
     profilePic: "https://via.placeholder.com/32",
   },
   {
-    rank: 2,
-    name: "Eve",
-    metric: "25 days",
-    profilePic: "https://via.placeholder.com/32",
-  },
-  {
-    rank: 3,
-    name: "Frank",
-    metric: "20 days",
+    rank: 4,
+    name: "Xavier",
+    waterIntake: 2200,
+    metric: 34,
     profilePic: "https://via.placeholder.com/32",
   },
 ];

@@ -169,9 +169,10 @@ function App() {
             <Leaderboard
               title="Most Water Intake Today"
               users={mostWaterIntakeUsers}
+              type={0}
             />
             <br />
-            <Leaderboard title="Longest Streak" users={longestStreakUsers} />
+            <Leaderboard title="Longest Streak" users={mostWaterIntakeUsers} type={1}/>
           </div>
         );
 
