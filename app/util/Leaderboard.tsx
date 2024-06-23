@@ -46,7 +46,8 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ title, users, type }) => {
                 <img
                   src={user.profilePic}
                   alt={`${user.name}'s profile`}
-                  className="w-8 h-8 rounded-full"
+                  className="w-10 h-10 rounded-full"
+                  style={{ objectFit: "cover" }}
                 />
               </td>
             </tr>
