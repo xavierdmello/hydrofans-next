@@ -15,6 +15,7 @@ import {
   logo,
   longestStreakUsers,
   mostWaterIntakeUsers,
+  stepsToStatus,
 } from "./constants";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -186,7 +187,10 @@ function App() {
       <div className="md:w-4/5 w-[95%] max-w-[800px] mx-auto flex flex-col items-center bg-white rounded-2xl shadow-lg h-full min-h-[calc(100vh-2rem)]">
         <img src={logo} className="w-64 mt-8 mb-8" alt="Hydrofans" />
         {currentPage === "home" && (
-          <div className="mx-5 overflow-hidden rounded-lg flex flex-col items-center md:max-w-[50%] max-w-[95%]">
+          <div
+            className="mx-5 overflow-hidden rounded-lg flex flex-col items-center md:max-w-[50%] max-w-[95%]"
+            style={{ maxHeight: "77vh", overflowY: "scroll" }}
+          >
             {/* <Image
               src="/logo.png"
               alt="Hydrofans"
@@ -240,12 +244,14 @@ function App() {
                     challengeStatus === "verifyingEmpty"
                   }
                 />
+                <br />
               </>
             )}
-            <p>Status: {steps.toString()}</p>
+            <p>Status: {stepsToStatus(steps)}</p>
             <p>Estimated Volume (mL): {claudeResponse}</p>
             <p>Today's intake: {user.currentIntake}</p>
             <p> Suggested Intake: {user.suggestedIntake}</p>
+            <br />
           </div>
         )}
         <div className="flex-grow w-full">{renderPage()}</div>

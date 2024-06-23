@@ -43,5 +43,18 @@ export const longestStreakUsers = [
 export const enum STEPS {
   NOT_STARTED,
   RECORDING,
-  DONE
+  DONE,
 }
+
+export const stepsToStatus = (steps: STEPS): string => {
+  switch (steps) {
+    case STEPS.NOT_STARTED:
+      return "Not Started";
+    case STEPS.RECORDING:
+      return "Recording";
+    case STEPS.DONE:
+      return "Complete!";
+    default:
+      return "Unknown";
+  }
+};
