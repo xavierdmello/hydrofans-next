@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Modal from "./Modal";
 
@@ -16,6 +16,8 @@ const WaterTracking: React.FC<WaterTrackingProps> = ({
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [selectedIntake, setSelectedIntake] = useState<number | null>(null);
   const [claudeResponse, setClaudeResponse] = useState<string>("");
+  const [question, setQuestion] = useState<string>("");
+
   const currentIntakeInCups = (currentIntake / 240).toFixed(2);
   const suggestedIntakeInCups = (suggestedIntake / 240).toFixed(2);
 
@@ -66,7 +68,7 @@ const WaterTracking: React.FC<WaterTrackingProps> = ({
       );
     }
   );
-  async function askClaude() {
+  async function askClaude(questionText: string) {
     setClaudeResponse("Asking...");
     const response = await fetch("/api/claude", {
       method: "POST",
@@ -74,8 +76,8 @@ const WaterTracking: React.FC<WaterTrackingProps> = ({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        systemPrompt: `You are HydroBot. You will provide the user with insights about their water intake. Today's water intake (mL): ${currentIntake}. Suggested daily water intake (mL): ${suggestedIntake}. Daily intake for the past month of June 2024: ${dailyIntake.toString()}.`,
-        textPrompt: "Summarize my water intake for today and the month.",
+        systemPrompt: `You are HydroBot. Answer concisely with lots of emojis, energy, exclamation marks. You will provide the user with insights about their water intake. Today's water intake (mL): ${currentIntake}. Suggested daily water intake (mL): ${suggestedIntake}. Daily intake for the past month of June 2024: ${dailyIntake.toString()}.`,
+        textPrompt: questionText,
       }),
     });
 
@@ -88,14 +90,30 @@ const WaterTracking: React.FC<WaterTrackingProps> = ({
     setClaudeResponse(data.fullResponse);
   }
 
+  useEffect(() => {
+    askClaude("Summarize my water intake for today.");
+  }, []);
+
   return (
     <div
       className="p-4 max-w-md mx-auto bg-white rounded-lg shadow-md"
-      style={{ maxHeight: "77vh", overflowY: "scroll" }}
+      style={{ maxHeight: "65vh", overflowY: "scroll" }}
     >
-      <h2 className="text-xl font-bold mb-4">Water Tracking</h2>
-      <p className="mt-4">{claudeResponse}</p>
-      <button onClick={() => askClaude()}>Ask HydroBot</button>
+      <h2 className="text-xl font-bold mb-4">Chat with HydroBot! 💦🤖</h2>
+      <p className="mt-4">HydroBot: {claudeResponse}</p>
+      <input
+        type="text"
+        placeholder="Ask HydroBot a question..."
+        value={question}
+        onChange={(e) => setQuestion(e.target.value)}
+        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+      />
+      <button
+        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md"
+        onClick={() => askClaude(question)}
+      >
+        Ask HydroBot
+      </button>
       <div className="flex items-center mb-4">
         <div className="relative w-16 h-64 bg-gray-200 rounded-lg overflow-hidden">
           <div
