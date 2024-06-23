@@ -107,7 +107,7 @@ function App() {
   // Once the record button is pressed and an image has been saved, send it to the Claude API.
   useEffect(() => {
     async function callClaude() {
-      setClaudeResponse("Getting estimated water amount...");
+      setClaudeResponse("...");
       if (challengeStatus === "verifyingFull" && initialWaterImage) {
         try {
           // Extract the base64 data from the data URL
@@ -254,7 +254,6 @@ function App() {
                 />
               </>
             )}
-            <p>Is Recording: {isRecording.toString()}</p>
             <p>Status: {steps.toString()}</p>
             <p>Estimated Volume (mL): {claudeResponse}</p>
           </div>
