@@ -10,13 +10,7 @@ import {
   FaTint,
   FaWater,
 } from "react-icons/fa";
-import {
-  STEPS,
-  logo,
-  longestStreakUsers,
-  mostWaterIntakeUsers,
-  stepsToStatus,
-} from "./constants";
+import { STEPS, logo, mostWaterIntakeUsers, stepsToStatus } from "./constants";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import Anthropic from "@anthropic-ai/sdk";
@@ -172,7 +166,11 @@ function App() {
               type={0}
             />
             <br />
-            <Leaderboard title="Longest Streak" users={mostWaterIntakeUsers} type={1}/>
+            <Leaderboard
+              title="Longest Streak"
+              users={mostWaterIntakeUsers}
+              type={1}
+            />
           </div>
         );
 

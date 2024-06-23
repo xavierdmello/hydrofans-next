@@ -7,7 +7,6 @@ interface WaterTrackingProps {
   suggestedIntake: number;
   dailyIntake: number[];
 }
-let msg = new SpeechSynthesisUtterance();
 
 const WaterTracking: React.FC<WaterTrackingProps> = ({
   currentIntake,
@@ -104,6 +103,10 @@ const WaterTracking: React.FC<WaterTrackingProps> = ({
     );
     asking = false;
     console.log(ttsText);
+    if (window["speechSynthesis"] === undefined) {
+      return;
+    }
+    let msg = new SpeechSynthesisUtterance();
     msg.text = ttsText;
     window.speechSynthesis.speak(msg);
   }
