@@ -57,6 +57,7 @@ function App() {
   >("notStarted");
   const [steps, setSteps] = useState(STEPS.NOT_STARTED);
   const [claudeResponse, setClaudeResponse] = useState<string>("");
+  const [claudeFullResponse, setClaudeFullResponse] = useState<string>("");
 
   useEffect(() => {
     console.log(isRecording, steps);
@@ -104,6 +105,7 @@ function App() {
             parseInt(claudeResponse)
           );
           setClaudeResponse(data.result);
+          setClaudeFullResponse(data.fullResponse);
           // Handle the response from Claude here
           // You may want to update the challengeStatus based on the response
         } catch (error) {
@@ -250,7 +252,8 @@ function App() {
             <p>Status: {stepsToStatus(steps)}</p>
             <p>Estimated Volume (mL): {claudeResponse}</p>
             <p>Today's intake: {user.currentIntake}</p>
-            <p> Suggested Intake: {user.suggestedIntake}</p>
+            <p>Suggested Intake: {user.suggestedIntake}</p>
+            <p>Full Response: {claudeFullResponse}</p>
             <br />
           </div>
         )}

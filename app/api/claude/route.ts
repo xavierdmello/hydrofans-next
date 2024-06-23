@@ -2,11 +2,10 @@ import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-
   const anthropic = new Anthropic({
     apiKey: process.env.ANTHROPIC_API_KEY,
   });
-  if (process.env.DISABLE_ANTHROPIC) {
+  if (process.env.DISABLE_ANTHROPIC === "true") {
     return NextResponse.json({
       result: "500",
     });
@@ -52,8 +51,13 @@ export async function POST(request: Request) {
       ],
     });
 
+    const textResult = (msg.content[0] as { text: string }).text;
+    const numberResult = textResult.match(/\d+/);
+    console.log("Claude API response:", textResult, numberResult);
+
     return NextResponse.json({
-      result: (msg.content[0] as { text: string }).text,
+      fullResponse: textResult,
+      result: numberResult,
     });
   } catch (error) {
     console.error("Error calling Claude API:", error);
