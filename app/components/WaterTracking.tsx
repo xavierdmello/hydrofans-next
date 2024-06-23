@@ -7,6 +7,7 @@ interface WaterTrackingProps {
   suggestedIntake: number;
   dailyIntake: number[];
 }
+let msg = new SpeechSynthesisUtterance();
 
 const WaterTracking: React.FC<WaterTrackingProps> = ({
   currentIntake,
@@ -17,6 +18,7 @@ const WaterTracking: React.FC<WaterTrackingProps> = ({
   const [selectedIntake, setSelectedIntake] = useState<number | null>(null);
   const [claudeResponse, setClaudeResponse] = useState<string>("");
   const [question, setQuestion] = useState<string>("");
+  let asking = false;
 
   const currentIntakeInCups = (currentIntake / 240).toFixed(2);
   const suggestedIntakeInCups = (suggestedIntake / 240).toFixed(2);
@@ -69,7 +71,12 @@ const WaterTracking: React.FC<WaterTrackingProps> = ({
     }
   );
   async function askClaude(questionText: string) {
-    setClaudeResponse("Asking...");
+    if (!asking) {
+      asking = true;
+    } else {
+      return;
+    }
+    setClaudeResponse(`Asking... ${questionText}`);
     const response = await fetch("/api/claude", {
       method: "POST",
       headers: {
@@ -88,6 +95,17 @@ const WaterTracking: React.FC<WaterTrackingProps> = ({
     const data = await response.json();
     console.log(data);
     setClaudeResponse(data.fullResponse);
+
+    const ttsText = data.fullResponse;
+
+    ttsText.replace(
+      /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g,
+      ""
+    );
+    asking = false;
+    console.log(ttsText);
+    msg.text = ttsText;
+    window.speechSynthesis.speak(msg);
   }
 
   useEffect(() => {
@@ -100,7 +118,9 @@ const WaterTracking: React.FC<WaterTrackingProps> = ({
       style={{ maxHeight: "65vh", overflowY: "scroll" }}
     >
       <h2 className="text-xl font-bold mb-4">Chat with HydroBot! 💦🤖</h2>
-      <p className="mt-4"><strong>HydroBot:</strong> {claudeResponse}</p>
+      <p className="mt-4">
+        <strong>HydroBot:</strong> {claudeResponse}
+      </p>
       <input
         type="text"
         placeholder="Ask HydroBot a question..."
@@ -111,6 +131,7 @@ const WaterTracking: React.FC<WaterTrackingProps> = ({
       <button
         className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md"
         onClick={() => askClaude(question)}
+        disabled={asking}
       >
         Ask HydroBot
       </button>
