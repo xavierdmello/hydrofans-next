@@ -1,0 +1,21 @@
+{
+  "name": "Hydrofans",
+  "short_name": "Hydrofans",
+  "description": "Stay hydrated and healthy with Hydrofans!",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#00afef",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
