@@ -234,6 +234,14 @@ function App() {
                         setCurrentIntake(
                           (prev) => prev + (parseInt(claudeResponse) ?? 0)
                         );
+                        const ttsText = "Congrats on drinking " + claudeResponse + " milliliters!";
+                        if (window["speechSynthesis"] === undefined) {
+                          return;
+                        }
+                        let msg = new SpeechSynthesisUtterance();
+                        msg.text = ttsText;
+                        window.speechSynthesis.cancel();
+                        window.speechSynthesis.speak(msg);
                       }
                     } else {
                       setSteps(STEPS.RECORDING);
