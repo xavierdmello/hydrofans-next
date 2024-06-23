@@ -26,7 +26,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
     email: "bwilliamwang@gmail.com",
     notifications: true,
     currentIntake: 0,
-    suggestedIntake: 2000,
+    suggestedIntake: 0,
     dailyIntake: [
       2000, 1500, 1800, 1900, 1600, 1700, 2300, 2000, 1500, 1800, 1900, 1600,
       1700, 2000, 1500, 1800, 1900, 1600, 1700, 2000, 1500, 1800,

@@ -1,23 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import WaterTracking from './WaterTracking';
+import {useUser} from '../context/UserContext';
 
-const suggestedIntake = 2000; // Example suggested intake
 const currentIntake = 1500; // Example current intake
 const dailyIntake = [2000, 1500, 1800, 1900, 1600, 1700, 2300, 2000, 1500, 1800, 1900, 1600, 1700, 2000, 1500, 1800, 1900, 1600, 1700, 2000, 1500, 1800]; 
 
 const WaterIntakeForm: React.FC = () => {
+  const { user, setUser } = useUser();
+  const [suggestedIntake, setSuggestedIntake] = useState(user.suggestedIntake);
+
+  useEffect(() => {
+    setUser({ ...user, suggestedIntake });
+  }, [suggestedIntake]);
+
   const [age, setAge] = useState<number | ''>(20);
   const [weight, setWeight] = useState<number | ''>(110);
   const [height, setHeight] = useState<number | ''>('');
   const [mealsPerDay, setMealsPerDay] = useState<number | ''>('');
-  const [waterIntake, setWaterIntake] = useState<number | null>(null);
+  const [waterIntake, setWaterIntake] = useState<number | null>(user.currentIntake);
 
   const calculateWaterIntake = () => {
     if (age && weight) {
       const waterIntakeInOunces = weight * 2/3;
       const waterIntakeInMl = waterIntakeInOunces * 29.5735;
-      setWaterIntake(Number(waterIntakeInMl.toFixed(0)));
+      const waterIntakeFormatted = Number(waterIntakeInMl.toFixed(0));
+      setWaterIntake(waterIntakeFormatted);
+      setSuggestedIntake(waterIntakeFormatted);
     }
   };
 
@@ -28,7 +37,7 @@ const WaterIntakeForm: React.FC = () => {
 
   return (
     <div className="max-w-md mx-auto p-4">
-      {waterIntake == null && <div>      
+      {waterIntake == 0 && <div>      
         <h1 className="text-2xl font-bold mb-4">Water Intake Calculator</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -78,7 +87,7 @@ const WaterIntakeForm: React.FC = () => {
           Calculate
         </button>
       </form></div>}
-      {waterIntake !== null && (
+      {waterIntake !== 0 && (
         <div>
           <p className="text-lg font-bold">Recommended Water Intake:</p>
           <p className="text-lg font-bold">{waterIntake} mL ({(waterIntake/250).toFixed(2)} cups) per day</p>
