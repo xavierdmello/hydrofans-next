@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
 
@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   });
 
   try {
-    const { image } = await request.json();
+    const { image, systemPrompt, textPrompt } = await request.json();
 
     if (!image || typeof image !== "string") {
       return NextResponse.json(
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
       model: "claude-3-5-sonnet-20240620",
       max_tokens: 1000,
       temperature: 0,
-      system: "Analyze this image",
+      system: systemPrompt,
       messages: [
         {
           role: "user",
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
                 data: image,
               },
             },
-            { type: "text", text: "is the water bottle over 50% full?" },
+            { type: "text", text: textPrompt },
           ],
         },
       ],

@@ -83,6 +83,7 @@ function App() {
     | "failedNotFull"
     | "failedNotEmpty"
   >("notStarted");
+  const [claudeResponse, setClaudeResponse] = useState<string>("");
 
   useEffect(() => {
     if (isRecording && challengeStatus === "notStarted") {
@@ -103,7 +104,7 @@ function App() {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ image: base64Data }),
+            body: JSON.stringify({ image: base64Data, systemPrompt: "Analyze the image.", textPrompt: "How many is the bottle in millimeters? Return one number."}),
           });
 
           if (!response.ok) {
@@ -112,6 +113,7 @@ function App() {
 
           const data = await response.json();
           console.log("Claude API response:", data.result);
+          setClaudeResponse(data.result);
           // Handle the response from Claude here
           // You may want to update the challengeStatus based on the response
         } catch (error) {
@@ -230,6 +232,7 @@ function App() {
                 challengeStatus === "verifyingEmpty"
               }
             />
+            {claudeResponse && <p>{claudeResponse}</p>}
           </div>
         )}
         <div className="flex-grow w-full">{renderPage()}</div>
