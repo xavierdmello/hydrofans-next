@@ -93,7 +93,7 @@ const WaterIntakeForm: React.FC = () => {
           <p className="text-lg font-bold">{waterIntake} mL ({(suggestedIntake/250).toFixed(2)} cups) per day</p>
 
           <br />
-          <WaterTracking currentIntake={currentIntake} suggestedIntake={suggestedIntake} dailyIntake={dailyIntake} />
+          <WaterTracking currentIntake={user.currentIntake} suggestedIntake={suggestedIntake} dailyIntake={dailyIntake} />
         </div>
       )}
     </div>
