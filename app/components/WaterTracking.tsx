@@ -100,7 +100,7 @@ const WaterTracking: React.FC<WaterTrackingProps> = ({
       style={{ maxHeight: "65vh", overflowY: "scroll" }}
     >
       <h2 className="text-xl font-bold mb-4">Chat with HydroBot! 💦🤖</h2>
-      <p className="mt-4">HydroBot: {claudeResponse}</p>
+      <p className="mt-4"><strong>HydroBot:</strong> {claudeResponse}</p>
       <input
         type="text"
         placeholder="Ask HydroBot a question..."
