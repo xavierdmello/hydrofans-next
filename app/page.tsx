@@ -195,7 +195,19 @@ function App() {
               className="mt-8 mb-8"
               priority
             /> */}
-            {steps === STEPS.DONE && <div>Congrats on drinking </div>}
+            {steps === STEPS.DONE && (
+              <>
+                <h1 className="text-2xl font-bold text-blue-600">
+                  Congrats on drinking {claudeResponse} mL!
+                </h1>
+                <br />
+                <img
+                  src="https://i.giphy.com/l396FvhXOqm20Pogo.webp"
+                  alt="Example WebP"
+                />
+                <br />
+              </>
+            )}
             {true && (
               <>
                 <Webcam

@@ -4,19 +4,19 @@ export const mostWaterIntakeUsers = [
   {
     rank: 1,
     name: "Alice",
-    metric: "100 oz",
+    metric: "2900 mL",
     profilePic: "https://via.placeholder.com/32",
   },
   {
     rank: 2,
     name: "Bob",
-    metric: "90 oz",
+    metric: "2600 mL",
     profilePic: "https://via.placeholder.com/32",
   },
   {
     rank: 3,
     name: "Charlie",
-    metric: "80 oz",
+    metric: "1800 mL",
     profilePic: "https://via.placeholder.com/32",
   },
 ];
