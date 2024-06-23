@@ -39,7 +39,7 @@ const posts: Post[] = [
 
 const WaterPosts: React.FC = () => {
   return (
-    <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md" style={{ maxHeight: '75vh' , overflowY:"scroll"}}>
+    <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md" style={{ maxHeight: '90vh' , overflowY:"scroll"}}>
       <h2 className="text-xl font-bold mb-4">Water Drinking Posts</h2>
       <div className="space-y-4">
         {posts.map((post, index) => (
