@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React, { ReactNode, createContext, useContext, useState } from 'react';
+import React, { ReactNode, createContext, useContext, useState } from "react";
 
 interface User {
   name: string;
@@ -18,14 +18,19 @@ interface UserContextType {
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const UserProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [user, setUser] = useState<User>({
-    name: '',
-    email: '',
+    name: "William Wang",
+    email: "bwilliamwang@gmail.com",
     notifications: true,
     currentIntake: 0,
-    suggestedIntake: 2000, // Example suggested intake
-    dailyIntake: Array(30).fill(0), // Example daily intake for the current month
+    suggestedIntake: 2000,
+    dailyIntake: [
+      2000, 1500, 1800, 1900, 1600, 1700, 2300, 2000, 1500, 1800, 1900, 1600,
+      1700, 2000, 1500, 1800, 1900, 1600, 1700, 2000, 1500, 1800,
+    ],
   });
 
   return (
@@ -38,7 +43,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 export const useUser = (): UserContextType => {
   const context = useContext(UserContext);
   if (!context) {
-    throw new Error('useUser must be used within a UserProvider');
+    throw new Error("useUser must be used within a UserProvider");
   }
   return context;
 };

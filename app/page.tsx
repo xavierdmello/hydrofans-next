@@ -10,6 +10,12 @@ import {
   FaTint,
   FaWater,
 } from "react-icons/fa";
+import {
+  STEPS,
+  logo,
+  longestStreakUsers,
+  mostWaterIntakeUsers,
+} from "./constants";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import Anthropic from "@anthropic-ai/sdk";
@@ -20,57 +26,17 @@ import Settings from "./components/Settings";
 import WaterIntakeForm from "./components/WaterIntakeForm";
 import WaterPosts from "./components/WaterPosts";
 import Webcam from "react-webcam";
-
-const logo = "/logo.png";
-const mostWaterIntakeUsers = [
-  {
-    rank: 1,
-    name: "Alice",
-    metric: "100 oz",
-    profilePic: "https://via.placeholder.com/32",
-  },
-  {
-    rank: 2,
-    name: "Bob",
-    metric: "90 oz",
-    profilePic: "https://via.placeholder.com/32",
-  },
-  {
-    rank: 3,
-    name: "Charlie",
-    metric: "80 oz",
-    profilePic: "https://via.placeholder.com/32",
-  },
-];
-
-const longestStreakUsers = [
-  {
-    rank: 1,
-    name: "Dave",
-    metric: "30 days",
-    profilePic: "https://via.placeholder.com/32",
-  },
-  {
-    rank: 2,
-    name: "Eve",
-    metric: "25 days",
-    profilePic: "https://via.placeholder.com/32",
-  },
-  {
-    rank: 3,
-    name: "Frank",
-    metric: "20 days",
-    profilePic: "https://via.placeholder.com/32",
-  },
-];
-
-const enum STEPS {
-  NOT_STARTED,
-  RECORDING,
-  DONE,
-}
+import { useUser } from "./context/UserContext";
 
 function App() {
+  const { user, setUser } = useUser();
+  const [currentIntake, setCurrentIntake] = useState(user.currentIntake);
+  const [suggestedIntake, setSuggestedIntake] = useState(user.suggestedIntake);
+
+  useEffect(() => {
+    setUser({ ...user, currentIntake, suggestedIntake });
+  }, [currentIntake, suggestedIntake]);
+
   const webcamRef = useRef<Webcam>(null);
 
   // Internal variable used by capture - do not use, does not store image data. Check the base64 variables.
@@ -131,7 +97,12 @@ function App() {
           }
 
           const data = await response.json();
-          console.log("Claude API response:", data.result);
+          console.log(
+            "Claude API response:",
+            data.result,
+            claudeResponse,
+            parseInt(claudeResponse)
+          );
           setClaudeResponse(data.result);
           // Handle the response from Claude here
           // You may want to update the challengeStatus based on the response
@@ -242,6 +213,9 @@ function App() {
                   onToggleRecording={() => {
                     if (isRecording) {
                       setSteps(STEPS.DONE);
+                      if (!isNaN(parseInt(claudeResponse))) {
+                        setCurrentIntake((prev) => prev + (parseInt(claudeResponse) ?? 0));
+                      }
                     } else {
                       setSteps(STEPS.RECORDING);
                     }
@@ -256,6 +230,10 @@ function App() {
             )}
             <p>Status: {steps.toString()}</p>
             <p>Estimated Volume (mL): {claudeResponse}</p>
+            <p>
+              Today's intake: {currentIntake} Suggested Intake:{" "}
+              {suggestedIntake}
+            </p>
           </div>
         )}
         <div className="flex-grow w-full">{renderPage()}</div>
