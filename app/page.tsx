@@ -91,8 +91,35 @@ function App() {
 
   // Once the record button is pressed and an image has been saved, send it to the Claude API.
   useEffect(() => {
-    async function callClaude() {}
-  }, [challengeStatus]);
+    async function callClaude() {
+      if (challengeStatus === "verifyingFull" && initialWaterImage) {
+        try {
+          // Extract the base64 data from the data URL
+          const base64Data = initialWaterImage.split(",")[1];
+
+          const response = await fetch("/api/claude", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ image: base64Data }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+          console.log("Claude API response:", data.result);
+          // Handle the response from Claude here
+          // You may want to update the challengeStatus based on the response
+        } catch (error) {
+          console.error("Error calling Claude API:", error);
+        }
+      }
+    }
+    callClaude();
+  }, [challengeStatus, initialWaterImage]);
 
   const toggleRecording = useCallback(() => {
     setIsRecording((prev) => !prev);
