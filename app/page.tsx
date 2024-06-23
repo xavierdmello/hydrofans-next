@@ -234,7 +234,7 @@ function App() {
                         setCurrentIntake(
                           (prev) => prev + (parseInt(claudeResponse) ?? 0)
                         );
-                        const ttsText = "Congrats on drinking " + claudeResponse + " milliliters!";
+                        const ttsText = "Yayyyyyyy!!!!! Congrats on drinking " + claudeResponse + " milliliters of water and staying hydrated with HydroFans!!!!";
                         if (window["speechSynthesis"] === undefined) {
                           return;
                         }
