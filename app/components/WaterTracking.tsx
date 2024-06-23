@@ -130,7 +130,7 @@ const WaterTracking: React.FC<WaterTrackingProps> = ({
         className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
       />
       <button
-        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md"
+        className="mt-4 mb-4 px-4 py-2 bg-blue-600 text-white rounded-md"
         onClick={() => askClaude(question)}
         disabled={asking}
       >
