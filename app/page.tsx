@@ -80,7 +80,7 @@ function App() {
   );
   const [initialWaterImage, setInitialWaterImage] = useState<string>("");
   const [endWaterImage, setEndWaterImage] = useState<string>("");
-  const [isRecording, setIsRecording] = useState(false);
+  const [isRecording, setIsRecording] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<string>("home");
   const [challengeStatus, setChallengeStatus] = useState<
     | "notStarted"
@@ -93,8 +93,14 @@ function App() {
   const [claudeResponse, setClaudeResponse] = useState<string>("");
 
   useEffect(() => {
+    console.log(isRecording, steps);
     if (isRecording && challengeStatus === "notStarted") {
       setChallengeStatus("verifyingFull");
+    }
+    if (isRecording) {
+      capture(setInitialWaterImage);
+    } else {
+      capture(setEndWaterImage);
     }
   }, [isRecording]);
 
@@ -116,7 +122,7 @@ function App() {
               image: base64Data,
               systemPrompt: "Analyze the image.",
               textPrompt:
-                "How many is the bottle in millimeters? Return one number.",
+                "How many is the bottle in millimeters? Return only one number in the format xxxmL.",
             }),
           });
 
@@ -152,14 +158,6 @@ function App() {
     height: 640,
     facingMode: facingMode,
   };
-
-  useEffect(() => {
-    if (isRecording) {
-      capture(setInitialWaterImage);
-    } else {
-      capture(setEndWaterImage);
-    }
-  }, [isRecording]);
 
   const capture = useCallback(
     (setImageState: React.Dispatch<React.SetStateAction<string>>) => {
@@ -239,7 +237,15 @@ function App() {
 
             <RecordButton
               isRecording={isRecording}
-              onToggleRecording={toggleRecording}
+              onToggleRecording={() => {
+                if (isRecording) {
+                  setSteps(STEPS.DONE);
+                } else {
+                  setSteps(STEPS.RECORDING);
+                }
+                toggleRecording()
+              }
+              }
               pending={
                 challengeStatus === "verifyingFull" ||
                 challengeStatus === "verifyingEmpty"
@@ -247,7 +253,7 @@ function App() {
             />
             <p>isRecording: {isRecording.toString()}</p>
             <p>steps: {steps}</p>
-            {claudeResponse && <p>{claudeResponse}</p>}
+            {claudeResponse && <p>Estimate Amount: {claudeResponse}</p>}
           </div>
         )}
         <div className="flex-grow w-full">{renderPage()}</div>
