@@ -11,14 +11,15 @@ import {
   FaWater,
 } from "react-icons/fa";
 import { useCallback, useEffect, useRef, useState } from "react";
+
 import Anthropic from "@anthropic-ai/sdk";
+import Image from "next/image";
 import Leaderboard from "./util/Leaderboard";
 import RecordButton from "./components/RecordButton";
+import Settings from "./components/Settings";
 import WaterIntakeForm from "./components/WaterIntakeForm";
 import WaterPosts from "./components/WaterPosts";
 import Webcam from "react-webcam";
-
-import Image from "next/image";
 
 const mostWaterIntakeUsers = [
   {
@@ -163,7 +164,7 @@ function App() {
       case "posts":
         return <WaterPosts />;
       case "settings":
-        return <WaterIntakeForm />;
+        return <Settings />;
       default:
         return null;
     }
@@ -203,7 +204,7 @@ function App() {
             />
           </div>
         )}
-        <div className="flex-grow">{renderPage()}</div>
+        <div className="flex-grow w-full">{renderPage()}</div>
         <div className="w-full mt-auto flex justify-around py-4 bg-gray-200">
           <FaHome
             className={`text-2xl cursor-pointer ${
